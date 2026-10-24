@@ -1,8 +1,15 @@
 <?php
-    $dbHost = "localhost";
-    $dbUser = "root";
-    $dbPass = "";
-    $dbName = "cake-orders";
+    $envPath = dirname(__DIR__) . DIRECTORY_SEPARATOR . '.env';
+    $env = is_file($envPath) ? parse_ini_file($envPath, false, INI_SCANNER_RAW) : [];
+
+    if ($env === false) {
+        die('Unable to read .env configuration.');
+    }
+
+    $dbHost = $env['DB_HOST'] ?? 'localhost';
+    $dbUser = $env['DB_USER'] ?? 'root';
+    $dbPass = $env['DB_PASS'] ?? '';
+    $dbName = $env['DB_NAME'] ?? 'cake-orders';
 
     $conn = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
 
